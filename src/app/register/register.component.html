@@ -1,0 +1,74 @@
+<form [formGroup]="registerForm" (submit)="submitForm()">
+  <h2 class="h4 mb-2">Registration Form</h2>
+  <mat-form-field class="col-5 mb-2 mx-auto">
+    <mat-label>Email</mat-label>
+    <input type="email" value="" matInput formControlName="email" />
+    <mat-error *ngIf="
+  registerForm.get('email').hasError('email')
+  &&!registerForm.get('email').hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="registerForm.get('email').hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+
+  <!-- full name -->
+  <mat-form-field class="col-5 mb-2 mx-auto">
+    <mat-label>Full Name</mat-label>
+    <input type="text" value="" matInput formControlName="fullName" />
+    <mat-error *ngIf="registerForm.get('fullName').hasError('required')">
+      Full Name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-5 mb-2 mx-auto">
+    <mat-label>Phone</mat-label>
+    <input type="phone" value="" matInput formControlName="phone" />
+    <mat-error *ngIf="registerForm.get('phone').hasError('required')">
+      Phone is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <!-- password -->
+  <mat-form-field class="col-5 mb-2 mx-auto">
+    <mat-label>Password</mat-label>
+    <input type="password" value="" matInput formControlName="password" />
+    <mat-error *ngIf="registerForm.get('password').hasError('required')">
+      Password is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="col-5 mb-2 mx-auto">
+    <mat-label>ConfirmPassword</mat-label>
+    <input type="password" value="" matInput formControlName="confirmPassword" />
+    <mat-error *ngIf="registerForm.get('confirmPassword').hasError('required')">
+      ConfirmPassword is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <h3 class="col-12 mb-2">Address</h3>
+
+  <button mat-flat-button class="add-course-btn" style="margin-bottom: 25px;" color="primary"
+    (click)="addQuantity()">add</button>
+
+  <ng-container formArrayName="addresses">
+
+    <ng-container *ngFor="let quantity of addresses().controls; let i=index" [formGroupName]="i">
+      <mat-form-field class="col-5 mb-2 mx-auto">
+        <input matInput formControlName="address" placeholder="address">
+      </mat-form-field>
+      <mat-error *ngIf="registerForm.get('addresses').hasError('required')">
+        Addresses is <strong>required</strong>
+      </mat-error>
+      <button mat-flat-button (click)="removeQuantity(i)" class="add-course-btn" style="margin-bottom: 25px;"
+        color="warn">Remove</button>
+    </ng-container>
+  </ng-container>
+
+
+  <mat-error *ngIf="error" class="col-5 mb-2">{{error}}</mat-error>
+  <div class="col-12 mb-2 mx-auto">
+    <button [disabled]="!registerForm.valid" mat-flat-button color="primary" type="submit">Submit</button>
+  </div>
+</form>
